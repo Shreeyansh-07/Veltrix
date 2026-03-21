@@ -93,7 +93,7 @@ export default function CustomersPage() {
 
       <section className="relative overflow-hidden bg-white border-b border-gray-200">
         <div className="grid lg:grid-cols-[1.05fr_1.35fr] min-h-155">
-          <div className="bg-[#d9d0f3] border-r border-gray-200 px-6 lg:px-10 py-14 lg:py-16 flex flex-col justify-between">
+          <div className="bg-[#d9d0f3] border-r border-gray-200 px-6 lg:px-10 py-14 lg:py-16 flex flex-col justify-between dark:bg-[#1a2140] dark:border-slate-700/70">
             <div>
               <p className="text-xs uppercase tracking-[0.25em] font-semibold text-emerald-700">Customers</p>
               <h1 className="text-5xl lg:text-7xl font-black text-gray-900 mt-4 leading-[1.03]">
@@ -117,7 +117,7 @@ export default function CustomersPage() {
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 border border-gray-700 bg-[#e6ddf8] px-6 py-3 rounded-md font-semibold text-gray-900 hover:bg-[#ddd2f4] transition-colors"
+                  className="inline-flex items-center gap-2 border border-gray-700 bg-[#e6ddf8] px-6 py-3 rounded-md font-semibold text-gray-900 hover:bg-[#ddd2f4] transition-colors dark:border-slate-500 dark:bg-[#25345a] dark:text-slate-100 dark:hover:bg-[#2e3f69]"
                 >
                   Contact sales
                   <ArrowRight size={16} />
@@ -126,7 +126,7 @@ export default function CustomersPage() {
 
               <div className="mt-8 grid sm:grid-cols-2 gap-3 max-w-xl">
                 {trustMetrics.map((metric) => (
-                  <div key={metric.label} className="rounded-xl border border-gray-300 bg-white/70 px-4 py-3">
+                  <div key={metric.label} className="rounded-xl border border-gray-300 bg-white/70 px-4 py-3 dark:bg-slate-800/70 dark:border-slate-600/70">
                     <p className="text-2xl font-black text-gray-900">{metric.value}</p>
                     <p className="text-sm text-gray-700 mt-1">{metric.label}</p>
                   </div>
@@ -135,7 +135,7 @@ export default function CustomersPage() {
             </div>
           </div>
 
-          <div className="relative bg-[#ebe6f6] overflow-hidden">
+          <div className="relative bg-[#ebe6f6] overflow-hidden dark:bg-[#121d34]">
             <div
               className="absolute inset-0"
               style={{
@@ -151,14 +151,14 @@ export default function CustomersPage() {
                 className={`absolute w-24 h-16 ${accent.color}`}
                 style={{ top: accent.top, left: accent.left }}
               >
-                <div className="absolute bottom-3 left-0 right-0 h-2 bg-white/75"></div>
+                <div className="absolute bottom-3 left-0 right-0 h-2 bg-white/75 dark:bg-slate-200/60"></div>
               </div>
             ))}
 
             {trustWallLogos.map((logo) => (
               <div
                 key={logo.name}
-                className="absolute w-55 h-32.5 bg-white border border-gray-200 shadow-sm flex items-center justify-center"
+                className="absolute w-55 h-32.5 bg-white border border-gray-200 shadow-sm flex items-center justify-center dark:bg-[#0e1729] dark:border-slate-600/70"
                 style={{ top: logo.top, left: logo.left }}
               >
                 <p className="text-4xl font-bold text-gray-900 tracking-tight">{logo.name}</p>

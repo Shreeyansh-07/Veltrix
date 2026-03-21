@@ -42,7 +42,7 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-[#f5f5f7]">
       {/* Header */}
       <div className="sticky top-0 bg-white border-b border-gray-200 px-8 py-6 z-40">
-        <div>
+        <div className="max-w-7xl">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
@@ -60,7 +60,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Content */}
-      <div className="px-8 py-8">
+      <div className="px-8 py-8 max-w-7xl">
         {/* Search */}
         <div className="mb-8">
           <div className="relative">

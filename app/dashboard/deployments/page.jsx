@@ -69,14 +69,14 @@ export default function DeploymentsPage() {
     <div className="min-h-screen bg-[#f5f5f7]">
       {/* Header */}
       <div className="sticky top-0 bg-white border-b border-gray-200 px-8 py-6 z-40">
-        <div>
+        <div className="max-w-7xl">
           <h1 className="text-3xl font-bold text-gray-900">Deployments</h1>
           <p className="text-gray-600 mt-1">View all your project deployments</p>
         </div>
       </div>
 
       {/* Content */}
-      <div className="px-8 py-8">
+      <div className="px-8 py-8 max-w-7xl">
         {/* Filter Tabs */}
         <div className="flex gap-4 mb-8 border-b border-gray-300">
           {['all', 'deployed', 'deploying', 'failed'].map((status) => (
@@ -96,7 +96,7 @@ export default function DeploymentsPage() {
 
         {/* Deployments Table */}
         {filteredDeployments.length > 0 ? (
-          <div className="bg-white border border-gray-200 overflow-hidden">
+          <div className="bg-white border border-gray-200 overflow-hidden rounded-2xl">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -168,7 +168,7 @@ export default function DeploymentsPage() {
             </div>
           </div>
         ) : (
-          <div className="text-center py-12 bg-white border border-gray-200">
+          <div className="text-center py-12 bg-white border border-gray-200 rounded-2xl">
             <p className="text-gray-600">No deployments to display</p>
           </div>
         )}

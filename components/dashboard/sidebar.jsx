@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { FolderOpen, Settings, BarChart3, Menu, X, ChevronDown, LogOut, Bell } from 'lucide-react';
 import { authStore } from '@/lib/auth-store';
 import { projectsStore } from '@/lib/projects-store';
+import BrandLogo from '@/components/brand-logo';
 import { toast } from 'sonner';
 
 const DashboardSidebar = () => {
@@ -63,13 +64,11 @@ const DashboardSidebar = () => {
       </button>
 
       {/* Sidebar */}
-      <aside className={`${isOpen ? 'w-64' : 'w-0'} lg:w-64 bg-white border-r border-gray-200 overflow-hidden transition-all duration-300 flex flex-col h-screen`}>
+      <aside className={`${isOpen ? 'w-72' : 'w-0'} lg:w-72 bg-white border-r border-gray-200 overflow-hidden transition-all duration-300 flex flex-col h-screen shrink-0`}>
         {/* Header */}
         <div className="p-6 border-b border-gray-200">
-          <Link href="/dashboard/projects" className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">R</span>
-            </div>
+          <Link href="/dashboard/projects" className="flex items-center gap-3">
+            <BrandLogo size={34} className="shrink-0" />
             <div>
               <p className="font-bold text-gray-900 text-sm">Veltrix</p>
               <p className="text-xs text-gray-500">{workspace?.name || 'Workspace'}</p>
@@ -81,9 +80,7 @@ const DashboardSidebar = () => {
         <div className="px-6 py-4 border-b border-gray-200">
           <button className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">
             <span className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-gray-900 rounded flex items-center justify-center text-xs font-bold text-white">
-                {workspace?.name?.charAt(0).toUpperCase()}
-              </div>
+              <BrandLogo size={20} className="shrink-0" />
               {workspace?.name || 'Workspace'}
             </span>
             <ChevronDown size={16} />

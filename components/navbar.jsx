@@ -112,13 +112,13 @@ const Navbar = () => {
           </Link>
         </div>
       )}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 dark:bg-[#081225] dark:border-slate-700/70">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <BrandLogo size={34} className="shrink-0" />
-              <span className="text-3xl font-semibold text-black hidden sm:inline tracking-tight">Veltrix</span>
+              <span className="text-3xl font-semibold text-black hidden sm:inline tracking-tight dark:text-slate-100">Veltrix</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -134,18 +134,18 @@ const Navbar = () => {
                         onClick={() => setActiveTab(item.label)}
                         className={`px-2 py-1 text-sm font-medium transition-colors ${
                           activeTab === item.label || isActive
-                            ? 'bg-violet-100 text-gray-900'
-                            : 'text-gray-700 hover:bg-violet-100 hover:text-black'
+                            ? 'bg-violet-100 text-gray-900 dark:bg-violet-900/50 dark:text-slate-100'
+                            : 'text-gray-700 hover:bg-violet-100 hover:text-black dark:text-slate-300 dark:hover:bg-violet-900/40 dark:hover:text-slate-100'
                         }`}
                       >
                         {item.label}
                       </Link>
 
-                      <div className="absolute left-0 mt-3 w-215 bg-[#f5f5f5] border border-gray-300 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                        <div className="grid grid-cols-2 border-b border-gray-300">
+                      <div className="absolute left-0 mt-3 w-215 bg-[#f5f5f5] border border-gray-300 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 dark:bg-[#0f1b2d] dark:border-slate-700/80">
+                        <div className="grid grid-cols-2 border-b border-gray-300 dark:border-slate-700/80">
                           <Link
                             href={productMega.topLeft.href}
-                            className="px-10 py-8 text-[17px] leading-none font-medium text-gray-900 hover:bg-white/60 transition-colors border-r border-gray-300 flex items-center justify-between"
+                            className="px-10 py-8 text-[17px] leading-none font-medium text-gray-900 hover:bg-white/60 transition-colors border-r border-gray-300 flex items-center justify-between dark:text-slate-100 dark:hover:bg-slate-800/70 dark:border-slate-700/80"
                           >
                             <span>{productMega.topLeft.label}</span>
                             <span className="text-xl leading-none">›</span>
@@ -153,7 +153,7 @@ const Navbar = () => {
 
                           <Link
                             href={productMega.topRight.href}
-                            className="px-10 py-8 text-[17px] leading-none font-medium text-gray-900 hover:bg-white/60 transition-colors flex items-center justify-between"
+                            className="px-10 py-8 text-[17px] leading-none font-medium text-gray-900 hover:bg-white/60 transition-colors flex items-center justify-between dark:text-slate-100 dark:hover:bg-slate-800/70"
                           >
                             <span>{productMega.topRight.label}</span>
                             <span className="text-xl leading-none">›</span>
@@ -162,10 +162,10 @@ const Navbar = () => {
 
                         <div className="grid grid-cols-2 gap-12 px-10 py-10">
                           <div>
-                            <p className="text-sm uppercase tracking-wide text-gray-500 mb-5">Features</p>
+                            <p className="text-sm uppercase tracking-wide text-gray-500 mb-5 dark:text-slate-400">Features</p>
                             <div className="space-y-4">
                               {productMega.features.map((entry) => (
-                                <Link key={entry.href} href={entry.href} className="block text-[14px] leading-none text-gray-900 hover:text-black transition-colors">
+                                <Link key={entry.href} href={entry.href} className="block text-[14px] leading-none text-gray-900 hover:text-black transition-colors dark:text-slate-200 dark:hover:text-white">
                                   {entry.label}
                                 </Link>
                               ))}
@@ -173,10 +173,10 @@ const Navbar = () => {
                           </div>
 
                           <div>
-                            <p className="text-sm uppercase tracking-wide text-gray-500 mb-5">Services</p>
+                            <p className="text-sm uppercase tracking-wide text-gray-500 mb-5 dark:text-slate-400">Services</p>
                             <div className="space-y-4">
                               {productMega.services.map((entry, index) => (
-                                <Link key={`${entry.label}-${index}`} href={entry.href} className="block text-[14px] leading-none text-gray-900 hover:text-black transition-colors">
+                                <Link key={`${entry.label}-${index}`} href={entry.href} className="block text-[14px] leading-none text-gray-900 hover:text-black transition-colors dark:text-slate-200 dark:hover:text-white">
                                   {entry.label}
                                 </Link>
                               ))}
@@ -195,20 +195,20 @@ const Navbar = () => {
                       onClick={() => setActiveTab(item.label)}
                       className={`px-2 py-1 text-sm font-medium transition-colors ${
                         activeTab === item.label || isActive
-                          ? 'bg-violet-100 text-gray-900'
-                          : 'text-gray-700 hover:bg-violet-100 hover:text-black'
+                          ? 'bg-violet-100 text-gray-900 dark:bg-violet-900/50 dark:text-slate-100'
+                          : 'text-gray-700 hover:bg-violet-100 hover:text-black dark:text-slate-300 dark:hover:bg-violet-900/40 dark:hover:text-slate-100'
                       }`}
                     >
                       {item.label}
                     </Link>
 
                     {item.submenu && (
-                      <div className="absolute left-0 mt-0 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-2">
+                      <div className="absolute left-0 mt-0 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-2 dark:bg-[#0f1b2d] dark:border-slate-700/80">
                         {item.submenu.map((subitem) => (
                           <Link
                             key={subitem.href}
                             href={subitem.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white"
                           >
                             {subitem.label}
                           </Link>
@@ -226,13 +226,13 @@ const Navbar = () => {
                 <div className="flex items-center gap-4">
                   <Link
                     href="/dashboard/projects"
-                    className="text-gray-700 hover:text-black text-sm font-medium transition-colors"
+                    className="text-gray-700 hover:text-black text-sm font-medium transition-colors dark:text-slate-300 dark:hover:text-white"
                   >
                     Dashboard
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="text-gray-700 hover:text-black text-sm font-medium transition-colors"
+                    className="text-gray-700 hover:text-black text-sm font-medium transition-colors dark:text-slate-300 dark:hover:text-white"
                   >
                     Logout
                   </button>
@@ -241,7 +241,7 @@ const Navbar = () => {
                 <>
                   <Link
                     href="/contact"
-                    className="text-gray-700 hover:text-black text-sm font-medium transition-colors hidden sm:inline"
+                    className="text-gray-700 hover:text-black text-sm font-medium transition-colors hidden sm:inline dark:text-slate-300 dark:hover:text-white"
                   >
                     Contact
                   </Link>
@@ -258,7 +258,7 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden text-gray-700 hover:text-black"
+              className="lg:hidden text-gray-700 hover:text-black dark:text-slate-300 dark:hover:text-white"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -266,12 +266,12 @@ const Navbar = () => {
 
           {/* Mobile Navigation */}
           {isOpen && (
-            <div className="lg:hidden mt-4 pb-4 border-t border-gray-200 pt-4">
+            <div className="lg:hidden mt-4 pb-4 border-t border-gray-200 pt-4 dark:border-slate-700/70">
               {navItems.map((item) => (
                 <div key={item.label}>
                   <Link
                     href={item.href}
-                    className="block py-2 text-gray-700 hover:text-black font-medium text-sm"
+                    className="block py-2 text-gray-700 hover:text-black font-medium text-sm dark:text-slate-300 dark:hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -281,7 +281,7 @@ const Navbar = () => {
                         <Link
                           key={subitem.href}
                           href={subitem.href}
-                          className="block py-1 text-gray-600 hover:text-black text-xs"
+                          className="block py-1 text-gray-600 hover:text-black text-xs dark:text-slate-400 dark:hover:text-white"
                         >
                           {subitem.label}
                         </Link>
@@ -290,18 +290,18 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
+              <div className="mt-4 pt-4 border-t border-gray-200 space-y-2 dark:border-slate-700/70">
                 {isLoggedIn ? (
                   <>
                     <Link
                       href="/dashboard/projects"
-                      className="block py-2 text-gray-700 hover:text-black font-medium text-sm"
+                      className="block py-2 text-gray-700 hover:text-black font-medium text-sm dark:text-slate-300 dark:hover:text-white"
                     >
                       Dashboard
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left py-2 text-gray-700 hover:text-black font-medium text-sm"
+                      className="block w-full text-left py-2 text-gray-700 hover:text-black font-medium text-sm dark:text-slate-300 dark:hover:text-white"
                     >
                       Logout
                     </button>
@@ -310,7 +310,7 @@ const Navbar = () => {
                   <>
                     <Link
                       href="/contact"
-                      className="block py-2 text-gray-700 hover:text-black font-medium text-sm"
+                      className="block py-2 text-gray-700 hover:text-black font-medium text-sm dark:text-slate-300 dark:hover:text-white"
                     >
                       Contact
                     </Link>

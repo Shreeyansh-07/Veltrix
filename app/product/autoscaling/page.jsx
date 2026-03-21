@@ -141,11 +141,11 @@ export default function AutoscalingPage() {
           </div>
 
           <div className="space-y-4">
-            <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-xl">
+            <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-xl dark:bg-[#0f1b2d] dark:border-slate-700/70">
               <p className="text-xs uppercase tracking-wide text-gray-500 font-semibold">Live scaling signals</p>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {scalingSignals.map((signal) => (
-                  <div key={signal.label} className="rounded-xl border border-gray-200 p-3 bg-gray-50">
+                  <div key={signal.label} className="rounded-xl border border-gray-200 p-3 bg-gray-50 dark:bg-[#13243a] dark:border-slate-700/70">
                     <p className="text-xs uppercase tracking-wide text-gray-500">{signal.label}</p>
                     <p className="text-2xl font-black text-gray-900 mt-1">{signal.value}</p>
                     <p className="text-xs text-violet-700 font-semibold mt-1">{signal.status}</p>
@@ -154,11 +154,11 @@ export default function AutoscalingPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-xl">
+            <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-xl dark:bg-[#0f1b2d] dark:border-slate-700/70">
               <p className="text-xs uppercase tracking-wide text-gray-500 font-semibold">Capacity trend</p>
-              <div className="mt-4 h-24 rounded-xl bg-linear-to-r from-violet-100 via-fuchsia-100 to-indigo-100 p-3 flex items-end gap-2">
+              <div className="mt-4 h-24 rounded-xl bg-linear-to-r from-violet-100 via-fuchsia-100 to-indigo-100 p-3 flex items-end gap-2 dark:from-[#2b1f46] dark:via-[#2a274f] dark:to-[#1b2b49]">
                 {[18, 22, 26, 24, 30, 38, 36, 44, 42, 48, 45, 52].map((value, index) => (
-                  <div key={`scale_bar_${index}`} className="flex-1 bg-black/80 rounded-t" style={{ height: `${value}%` }}></div>
+                  <div key={`scale_bar_${index}`} className="flex-1 bg-black/80 rounded-t dark:bg-slate-100/85" style={{ height: `${value}%` }}></div>
                 ))}
               </div>
             </div>
@@ -277,12 +277,12 @@ export default function AutoscalingPage() {
           </div>
           <div className="space-y-3">
             {faqItems.map((item) => (
-              <details key={item.q} className="group rounded-xl border border-gray-200 p-5 open:bg-gray-50">
-                <summary className="font-semibold text-gray-900 cursor-pointer list-none flex items-center justify-between gap-3">
+              <details key={item.q} className="group rounded-xl border border-gray-200 p-5 bg-[#fafbff] open:bg-white dark:bg-[#122032] dark:border-slate-700/70 dark:open:bg-[#1a2a40]">
+                <summary className="font-semibold text-gray-900 cursor-pointer list-none flex items-center justify-between gap-3 dark:text-slate-100">
                   {item.q}
-                  <span className="text-gray-500 group-open:rotate-45 transition-transform">+</span>
+                  <span className="text-gray-500 group-open:rotate-45 transition-transform dark:text-slate-300">+</span>
                 </summary>
-                <p className="text-gray-600 mt-3 text-sm leading-relaxed">{item.a}</p>
+                <p className="text-gray-600 mt-3 text-sm leading-relaxed dark:text-slate-300">{item.a}</p>
               </details>
             ))}
           </div>

@@ -135,18 +135,18 @@ export default function NetworkingPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-xl">
+          <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-xl dark:bg-[#0f1b2d] dark:border-slate-700/70">
             <p className="text-xs uppercase tracking-wide text-gray-500 font-semibold">Network topology map</p>
-            <div className="mt-4 rounded-2xl border border-gray-200 p-4 bg-gray-50 space-y-3">
-              <div className="rounded-xl border border-violet-200 bg-violet-50 p-3">
+            <div className="mt-4 rounded-2xl border border-gray-200 p-4 bg-gray-50 space-y-3 dark:bg-[#13243a] dark:border-slate-700/70">
+              <div className="rounded-xl border border-violet-200 bg-violet-50 p-3 dark:bg-violet-900/25 dark:border-violet-700/60">
                 <p className="text-xs uppercase tracking-wide text-violet-700 font-semibold">Public Zone</p>
                 <p className="text-sm text-gray-700 mt-1">web-frontend, api-gateway</p>
               </div>
-              <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-3">
+              <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-3 dark:bg-indigo-900/25 dark:border-indigo-700/60">
                 <p className="text-xs uppercase tracking-wide text-indigo-700 font-semibold">Private Zone</p>
                 <p className="text-sm text-gray-700 mt-1">payments-private, analytics-private, worker-jobs</p>
               </div>
-              <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
+              <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 dark:bg-emerald-900/25 dark:border-emerald-700/60">
                 <p className="text-xs uppercase tracking-wide text-emerald-700 font-semibold">Data Zone</p>
                 <p className="text-sm text-gray-700 mt-1">render-postgres, render-key-value</p>
               </div>
@@ -286,12 +286,12 @@ export default function NetworkingPage() {
           </div>
           <div className="space-y-3">
             {faqItems.map((item) => (
-              <details key={item.q} className="group rounded-xl border border-gray-200 p-5 open:bg-gray-50">
-                <summary className="font-semibold text-gray-900 cursor-pointer list-none flex items-center justify-between gap-3">
+              <details key={item.q} className="group rounded-xl border border-gray-200 p-5 bg-[#fafbff] open:bg-white dark:bg-[#122032] dark:border-slate-700/70 dark:open:bg-[#1a2a40]">
+                <summary className="font-semibold text-gray-900 cursor-pointer list-none flex items-center justify-between gap-3 dark:text-slate-100">
                   {item.q}
-                  <span className="text-gray-500 group-open:rotate-45 transition-transform">+</span>
+                  <span className="text-gray-500 group-open:rotate-45 transition-transform dark:text-slate-300">+</span>
                 </summary>
-                <p className="text-gray-600 mt-3 text-sm leading-relaxed">{item.a}</p>
+                <p className="text-gray-600 mt-3 text-sm leading-relaxed dark:text-slate-300">{item.a}</p>
               </details>
             ))}
           </div>

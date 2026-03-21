@@ -298,12 +298,12 @@ export default function BlogPage() {
             {editorialSeries.map((series) => {
               const Icon = series.icon;
               return (
-                <article key={series.name} className="rounded-2xl border border-gray-200 bg-[#fffaf8] p-6">
-                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-rose-100 to-amber-100 flex items-center justify-center">
-                    <Icon size={20} className="text-gray-900" />
+                <article key={series.name} className="rounded-2xl border border-gray-200 bg-[#fffaf8] p-6 dark:bg-[#122032] dark:border-slate-700/70">
+                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-rose-100 to-amber-100 flex items-center justify-center dark:from-rose-900/40 dark:to-amber-900/40">
+                    <Icon size={20} className="text-gray-900 dark:text-slate-100" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mt-4">{series.name}</h3>
-                  <p className="text-gray-600 mt-2">{series.detail}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-4 dark:text-slate-100">{series.name}</h3>
+                  <p className="text-gray-600 mt-2 dark:text-slate-300">{series.detail}</p>
                 </article>
               );
             })}
@@ -357,12 +357,12 @@ export default function BlogPage() {
 
           <div className="space-y-4">
             {faqs.map((item) => (
-              <details key={item.question} className="group rounded-2xl border border-gray-200 bg-[#fffaf8] p-6">
-                <summary className="list-none cursor-pointer font-bold text-gray-900 flex items-center justify-between gap-4">
+              <details key={item.question} className="group rounded-2xl border border-gray-200 bg-[#fffaf8] p-6 dark:bg-[#122032] dark:border-slate-700/70">
+                <summary className="list-none cursor-pointer font-bold text-gray-900 flex items-center justify-between gap-4 dark:text-slate-100">
                   {item.question}
                   <span className="text-rose-700 group-open:rotate-45 transition-transform">+</span>
                 </summary>
-                <p className="text-gray-600 mt-3">{item.answer}</p>
+                <p className="text-gray-600 mt-3 dark:text-slate-300">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -371,7 +371,7 @@ export default function BlogPage() {
 
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="bg-linear-to-r from-[#fff3eb] via-[#fff8ef] to-[#fff0f5] rounded-3xl border border-gray-200 p-8 lg:p-12 text-center">
+          <div className="bg-linear-to-r from-[#fff3eb] via-[#fff8ef] to-[#fff0f5] rounded-3xl border border-gray-200 p-8 lg:p-12 text-center dark:from-[#1a2740] dark:via-[#1f3350] dark:to-[#122238] dark:border-slate-700/70">
             <h2 className="text-3xl lg:text-5xl font-black text-gray-900">Want insights tailored to your team challenges?</h2>
             <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
               Follow engineering and reliability content that helps your team ship faster with stronger production

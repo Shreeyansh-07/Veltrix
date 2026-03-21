@@ -167,8 +167,8 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                     onClick={() => applyTypeDefaults(type.id)}
                     className={`p-4 rounded-lg border-2 transition-all text-left ${
                       projectType === type.id
-                        ? 'border-black bg-gray-100'
-                        : 'border-gray-200 hover:border-gray-400'
+                        ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-300 shadow-[0_0_0_3px_rgba(139,92,246,0.2)] dark:border-violet-400 dark:bg-violet-950/30 dark:ring-violet-500/60 dark:shadow-[0_0_0_3px_rgba(139,92,246,0.35)]'
+                        : 'border-gray-200 hover:border-gray-400 dark:border-slate-700 dark:hover:border-slate-500'
                     }`}
                   >
                     <p className="font-bold text-gray-900">{type.label}</p>
@@ -195,8 +195,8 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                     onMouseLeave={() => setHoveredRepoId(null)}
                     className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
                       selectedRepo?.id === repo.id
-                        ? 'border-black bg-gray-100'
-                        : 'border-gray-200 hover:border-gray-400'
+                        ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-300 shadow-[0_0_0_3px_rgba(139,92,246,0.2)] dark:border-violet-400 dark:bg-violet-950/30 dark:ring-violet-500/60 dark:shadow-[0_0_0_3px_rgba(139,92,246,0.35)]'
+                        : 'border-gray-200 hover:border-gray-400 dark:border-slate-700 dark:hover:border-slate-500'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-3">
@@ -369,8 +369,8 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                     onClick={() => updateFormData({ environment: env.id })}
                     className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
                       formData.environment === env.id
-                        ? 'border-black bg-gray-100'
-                        : 'border-gray-200 hover:border-gray-400'
+                        ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-300 shadow-[0_0_0_3px_rgba(139,92,246,0.2)] dark:border-violet-400 dark:bg-violet-950/30 dark:ring-violet-500/60 dark:shadow-[0_0_0_3px_rgba(139,92,246,0.35)]'
+                        : 'border-gray-200 hover:border-gray-400 dark:border-slate-700 dark:hover:border-slate-500'
                     }`}
                   >
                     <p className="font-semibold text-gray-900">{env.title}</p>

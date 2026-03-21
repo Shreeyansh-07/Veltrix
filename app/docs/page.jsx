@@ -183,15 +183,15 @@ export default function DocsPage() {
             {docTracks.map((track) => {
               const Icon = track.icon;
               return (
-                <article key={track.title} className="rounded-2xl border border-gray-200 bg-[#fafbff] p-6">
-                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-sky-100 to-cyan-100 flex items-center justify-center">
-                    <Icon size={20} className="text-gray-900" />
+                <article key={track.title} className="rounded-2xl border border-gray-200 bg-[#fafbff] p-6 dark:bg-[#122032] dark:border-slate-700/70">
+                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-sky-100 to-cyan-100 flex items-center justify-center dark:from-sky-900/40 dark:to-cyan-900/40">
+                    <Icon size={20} className="text-gray-900 dark:text-slate-100" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mt-4">{track.title}</h3>
-                  <p className="text-gray-600 mt-2">{track.description}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-4 dark:text-slate-100">{track.title}</h3>
+                  <p className="text-gray-600 mt-2 dark:text-slate-300">{track.description}</p>
                   <ul className="mt-4 space-y-2 text-sm">
                     {track.links.map((item) => (
-                      <li key={item} className="text-sky-700">{item}</li>
+                      <li key={item} className="text-sky-700 dark:text-sky-300">{item}</li>
                     ))}
                   </ul>
                 </article>
@@ -251,12 +251,12 @@ export default function DocsPage() {
               const icons = [BookOpen, LifeBuoy, ShieldCheck];
               const Icon = icons[index];
               return (
-                <article key={channel.title} className="rounded-2xl border border-gray-200 bg-[#fafbff] p-6">
-                  <div className="w-11 h-11 rounded-xl bg-gray-900 text-white flex items-center justify-center">
+                <article key={channel.title} className="rounded-2xl border border-gray-200 bg-[#fafbff] p-6 dark:bg-[#122032] dark:border-slate-700/70">
+                  <div className="w-11 h-11 rounded-xl bg-gray-900 text-white flex items-center justify-center dark:bg-slate-100 dark:text-slate-900">
                     <Icon size={20} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mt-4">{channel.title}</h3>
-                  <p className="text-gray-600 mt-2">{channel.detail}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mt-4 dark:text-slate-100">{channel.title}</h3>
+                  <p className="text-gray-600 mt-2 dark:text-slate-300">{channel.detail}</p>
                 </article>
               );
             })}

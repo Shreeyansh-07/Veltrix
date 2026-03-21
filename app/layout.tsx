@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { Toaster } from 'sonner'
+import { Toaster } from '@/components/ui/sonner'
+import { ThemeProvider } from '@/components/theme-provider'
+import ThemeToggle from '@/components/theme-toggle'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -31,11 +33,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased bg-white text-gray-900">
-        {children}
-        <Toaster position="top-center" />
-        <Analytics />
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-sans antialiased bg-background text-foreground transition-colors duration-300">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          {children}
+          <ThemeToggle />
+          <Toaster position="top-center" />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   )

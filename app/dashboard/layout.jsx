@@ -36,9 +36,9 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="grid h-screen bg-gray-100 lg:grid-cols-[18rem_minmax(0,1fr)]">
       <DashboardSidebar />
-      <main className="flex-1 overflow-auto">
+      <main className="overflow-auto min-w-0">
         {children}
       </main>
     </div>
