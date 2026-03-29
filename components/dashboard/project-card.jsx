@@ -33,7 +33,9 @@ const ProjectCard = ({ project, onDelete }) => {
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h3 className="text-lg font-bold text-gray-900">{project.name}</h3>
+            <Link href={`/dashboard/deployments/${project.id}`}>
+              <h3 className="text-lg font-bold text-gray-900 hover:text-purple-600 transition-colors">{project.name}</h3> 
+            </Link>
             <p className="text-sm text-gray-600 mt-1 truncate max-w-44">{project.repository}</p>
           </div>
           <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getTypeColor(project.type)}`}>
@@ -86,19 +88,19 @@ const ProjectCard = ({ project, onDelete }) => {
 
         {/* Timestamps */}
         <div className="text-xs text-gray-500 space-y-1">
-          <p>Created: {new Date(project.createdAt).toLocaleDateString()}</p>
-          <p>Updated: {new Date(project.updatedAt).toLocaleDateString()}</p>
+          <p>Created: {project.createdAt ? new Date(project.createdAt).toLocaleString() : 'N/A'}</p>    
+          <p>Updated: {project.updatedAt ? new Date(project.updatedAt).toLocaleString() : 'N/A'}</p>    
         </div>
       </div>
 
       {/* Footer Actions */}
       <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
         <Link
-          href={`/dashboard/projects/${project.id}`}
+          href={`/dashboard/deployments/${project.id}`}
           className="flex-1 flex items-center justify-center gap-2 bg-black text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-900 transition-colors text-sm"
         >
           <Edit size={16} />
-          Edit
+          Edit & Logs
         </Link>
         <button
           onClick={() => onDelete(project.id)}

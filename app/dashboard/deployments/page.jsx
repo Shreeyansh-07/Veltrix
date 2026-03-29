@@ -17,14 +17,34 @@ export default function DeploymentsPage() {
 
   useEffect(() => {
     if (!workspace?.id) return;
-    const allDeployments = projectsStore.getDeployments(workspace.id);
     const allProjects = projectsStore.getProjects(workspace.id);
     const map = allProjects.reduce((acc, project) => {
       acc[project.id] = project;
       return acc;
     }, {});
     setProjectsMap(map);
-    setDeployments(allDeployments);
+    
+    import('@/services/deployments').then(({ listDeployments }) => {
+      listDeployments().then(liveDeployments => {
+        const shaped = liveDeployments.map(d => ({
+          id: d.deployment_id,
+          projectId: d.deployment_id,
+          project: { name: d.subdomain },
+          status: d.status === 'running' ? 'deployed' : (d.status === 'failed' ? 'failed' : 'deploying'),
+          environment: 'production',
+          url: d.url || `https://${d.subdomain}.veltrix.app`,
+          branch: 'main',
+          createdAt: d.started_at || new Date().toISOString(),
+          runtime: 'Docker',
+          commitSha: '',
+          commitMessage: 'Deployed via Dashboard'
+        }));
+        setDeployments(shaped);
+      }).catch(err => {
+        console.error(err);
+        setDeployments(projectsStore.getDeployments(workspace.id));
+      });
+    });
   }, [workspace?.id]);
 
   const filteredDeployments = filter === 'all'
@@ -131,8 +151,8 @@ export default function DeploymentsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div>
-                          <p className="text-sm font-mono text-gray-900">{deployment.commitSha.substring(0, 7)}</p>
-                          <p className="text-xs text-gray-600 mt-1">{deployment.commitMessage}</p>
+                          <p className="text-sm font-mono text-gray-900">{deployment.commitSha ? deployment.commitSha.substring(0, 7) : 'latest'}</p>
+                          <p className="text-xs text-gray-600 mt-1">{deployment.commitMessage || 'Deployed via Git'}</p>
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -140,7 +160,7 @@ export default function DeploymentsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <span className="text-sm text-gray-600">
-                          {new Date(deployment.createdAt).toLocaleDateString()}
+                          {deployment.createdAt ? new Date(deployment.createdAt).toLocaleString() : 'N/A'}
                         </span>
                       </td>
                       <td className="px-6 py-4">

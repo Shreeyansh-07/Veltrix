@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Github, ArrowRight } from 'lucide-react';
 import { authStore } from '@/lib/auth-store';
+import { createClient } from '@/utils/supabase/client';
 import { toast } from 'sonner';
 import Navbar from '@/components/navbar';
 
@@ -16,10 +17,11 @@ export default function SignupPage() {
     confirmPassword: '',
   });
   const [loading, setLoading] = useState(false);
+  const supabase = createClient();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSignup = async (e) => {
@@ -29,45 +31,60 @@ export default function SignupPage() {
     try {
       if (!formData.email || !formData.password || !formData.confirmPassword) {
         toast.error('Please fill in all fields');
+        setLoading(false);
         return;
       }
 
       if (!formData.email.includes('@')) {
         toast.error('Please enter a valid email');
+        setLoading(false);
         return;
       }
 
       if (formData.password.length < 6) {
         toast.error('Password must be at least 6 characters');
+        setLoading(false);
         return;
       }
 
       if (formData.password !== formData.confirmPassword) {
         toast.error('Passwords do not match');
+        setLoading(false);
         return;
       }
 
-      const { user } = authStore.signup(formData.email, formData.password);
-      toast.success(`Welcome, ${user.name}! Your workspace has been created.`);
+      const { error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
 
-      // Redirect to dashboard after short delay
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 500);
+      if (error) throw error;
+
+      authStore.signup(formData.email);
+      toast.success(`Check your email for the confirmation link!`);
+      
     } catch (error) {
-      toast.error('Signup failed. Please try again.');
+      toast.error(error.message || 'Signup failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleGitHubSignup = () => {
-    toast.info('GitHub OAuth would connect here');
-    const { user } = authStore.loginWithGithub('user@github.com');
-    toast.success(`Welcome, ${user.name}! Your workspace has been created.`);
-    setTimeout(() => {
-      router.push('/dashboard');
-    }, 500);
+  const handleGitHubSignup = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      if (error) throw error;
+    } catch (error) {
+      toast.error(error.message || 'GitHub signup failed.');
+    }
   };
 
   return (
@@ -167,6 +184,7 @@ export default function SignupPage() {
 
           {/* GitHub Signup */}
           <button
+            type="button"
             onClick={handleGitHubSignup}
             className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-3"
           >

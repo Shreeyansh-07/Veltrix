@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FolderOpen, Settings, BarChart3, Menu, X, ChevronDown, LogOut, Bell } from 'lucide-react';
+import { FolderOpen, Settings, BarChart3, Menu, X, ChevronDown, LogOut, Bell, Activity } from 'lucide-react';
 import { authStore } from '@/lib/auth-store';
 import { projectsStore } from '@/lib/projects-store';
 import BrandLogo from '@/components/brand-logo';
@@ -22,7 +22,16 @@ const DashboardSidebar = () => {
     if (!workspace?.id) return;
     const projects = projectsStore.getProjects(workspace.id);
     const deployments = projectsStore.getDeployments(workspace.id);
-    setCounts({ projects: projects.length, deployments: deployments.length });
+    setCounts(prev => ({ ...prev, projects: projects.length }));
+    
+    import('@/services/deployments').then(({ listDeployments }) => {
+      listDeployments().then(deployments => {
+        setCounts(prev => ({ ...prev, deployments: deployments.length }));
+      }).catch(err => {
+        const localDeployments = projectsStore.getDeployments(workspace.id);
+        setCounts(prev => ({ ...prev, deployments: localDeployments.length }));
+      });
+    });
   }, [workspace?.id, pathname]);
 
   const menuItems = [
@@ -37,6 +46,11 @@ const DashboardSidebar = () => {
       label: 'Deployments',
       href: '/dashboard/deployments',
       badge: counts.deployments,
+    },
+    {
+      icon: Activity,
+      label: 'Analytics',
+      href: '/dashboard/analytics',
     },
     {
       icon: Settings,
@@ -155,3 +169,4 @@ const DashboardSidebar = () => {
 };
 
 export default DashboardSidebar;
+
