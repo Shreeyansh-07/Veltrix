@@ -7,19 +7,48 @@ import { authStore } from '@/lib/auth-store';
 import ProjectCard from '@/components/dashboard/project-card';
 import CreateProjectModal from '@/components/dashboard/create-project-modal';
 import { toast } from 'sonner';
+import { listDeployments } from '@/services/deployments';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [workspace, setWorkspace] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchDeployments = async () => {
+    try {
+      setLoading(true);
+      const deployments = await listDeployments();
+      // Map API deployments to ProjectCard format
+      const activeProjects = deployments.map((d) => ({
+        id: d.deployment_id,
+        name: d.subdomain,
+        repository: d.repo || 'unknown/repo',
+        type: 'web-service',
+        environment: 'production',
+        status: d.status === 'running' ? 'active' : d.status,
+        createdAt: d.started_at || new Date().toISOString(),
+        updatedAt: d.last_updated || new Date().toISOString(),
+        branch: 'main',
+      }));
+      setProjects(activeProjects);
+    } catch (error) {
+      console.error('Failed to load deployments:', error);
+      toast.error('Failed to load real deployments, falling back to local storage.');
+      const currentWorkspace = authStore.getWorkspace();
+      if (currentWorkspace?.id) {
+        setProjects(projectsStore.getProjects(currentWorkspace.id));
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const currentWorkspace = authStore.getWorkspace();
     setWorkspace(currentWorkspace);
-    if (!currentWorkspace?.id) return;
-    const allProjects = projectsStore.getProjects(currentWorkspace.id);
-    setProjects(allProjects);
+    fetchDeployments();
   }, []);
 
   const filteredProjects = projects.filter(p =>
@@ -27,7 +56,8 @@ export default function ProjectsPage() {
   );
 
   const handleProjectCreated = (newProject) => {
-    setProjects((prev) => [newProject, ...prev]);
+    // Re-fetch from DB to get actual newly deployed server
+    fetchDeployments();
     setShowCreateModal(false);
   };
 
@@ -76,7 +106,11 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects Grid */}
-        {filteredProjects.length > 0 ? (
+        {loading ? (
+          <div className="flex items-center justify-center py-20 text-gray-500">
+            Fetching active deployments...
+          </div>
+        ) : filteredProjects.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map(project => (
               <ProjectCard key={project.id} project={project} onDelete={handleDeleteProject} />

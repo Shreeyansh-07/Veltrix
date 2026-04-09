@@ -3,22 +3,31 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import DashboardSidebar from '@/components/dashboard/sidebar';
+import { createClient } from '@/utils/supabase/client';
 import { authStore } from '@/lib/auth-store';
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const supabase = createClient();
 
   useEffect(() => {
-    if (!authStore.isLoggedIn()) {
-      router.push('/login');
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user && !authStore.isLoggedIn()) {
+        router.push('/login');
+      } else {
+        if (user && !authStore.isLoggedIn()) {
+           authStore.login(user.email);
+        }
+        setIsLoggedIn(true);
+      }
       setLoading(false);
-    } else {
-      setIsLoggedIn(true);
-      setLoading(false);
-    }
-  }, [router]);
+    };
+    checkUser();
+  }, [router, supabase.auth]);
 
   if (loading) {
     return (

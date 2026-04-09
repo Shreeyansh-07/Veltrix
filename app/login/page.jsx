@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Github, ArrowRight } from 'lucide-react';
 import { authStore } from '@/lib/auth-store';
+import { createClient } from '@/utils/supabase/client';
 import { toast } from 'sonner';
 import Navbar from '@/components/navbar';
 
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const supabase = createClient();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,35 +23,51 @@ export default function LoginPage() {
     try {
       if (!email || !password) {
         toast.error('Please fill in all fields');
+        setLoading(false);
         return;
       }
 
       if (!email.includes('@')) {
         toast.error('Please enter a valid email');
+        setLoading(false);
         return;
       }
 
-      const { user } = authStore.login(email, password);
-      toast.success(`Welcome back, ${user.name}!`);
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      authStore.login(email);
+      toast.success(`Welcome back!`);
 
       // Redirect to dashboard after short delay
       setTimeout(() => {
         router.push('/dashboard');
+        router.refresh();
       }, 500);
+
     } catch (error) {
-      toast.error('Login failed. Please try again.');
+      toast.error(error.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleGitHubLogin = () => {
-    toast.info('GitHub OAuth would connect here');
-    const { user } = authStore.loginWithGithub('user@github.com');
-    toast.success(`Welcome, ${user.name}!`);
-    setTimeout(() => {
-      router.push('/dashboard');
-    }, 500);
+  const handleGitHubLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      if (error) throw error;
+    } catch (error) {
+      toast.error(error.message || 'GitHub login failed.');
+    }
   };
 
   return (
@@ -132,6 +150,7 @@ export default function LoginPage() {
           {/* GitHub Login */}
           <button
             onClick={handleGitHubLogin}
+            type="button"
             className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-3"
           >
             <Github size={20} />
