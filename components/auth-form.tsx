@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation';
-import { authStore } from '@/lib/auth-store';
 
 export default function AuthForm() {
   const [email, setEmail] = useState('');
@@ -11,7 +9,6 @@ export default function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const supabase = createClient();
-  const router = useRouter();
 
   // GitHub OAuth Sign In
   const handleGitHubSignIn = async () => {
@@ -54,13 +51,7 @@ export default function AuthForm() {
       password,
     });
 
-    if (error) {
-      setError(error.message);
-    } else {
-      authStore.login(email);
-      router.push('/dashboard');
-      router.refresh();
-    }
+    if (error) setError(error.message);
   };
 
   return (

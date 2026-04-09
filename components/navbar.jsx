@@ -12,11 +12,13 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(authStore.isLoggedIn());
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setIsLoggedIn(authStore.isLoggedIn());
+    setMounted(true);
 
     const matchedItem = navItems.find(
       (item) => pathname === item.href || pathname.startsWith(`${item.href}/`)

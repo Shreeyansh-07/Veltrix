@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useMemo, useState, use } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Plus, Save } from 'lucide-react';
 import { authStore } from '@/lib/auth-store';
@@ -19,8 +19,8 @@ const defaultForm = {
   envVars: [{ key: '', value: '' }],
 };
 
-export default function ProjectDetailsPage() {
-  const params = useParams();
+export default function ProjectDetailsPage(props) {
+  const params = use(props.params);
   const router = useRouter();
   const projectId = params?.projectId;
   const workspace = authStore.getWorkspace();
@@ -53,7 +53,7 @@ export default function ProjectDetailsPage() {
     setDeployments(projectDeployments);
   }, [workspace?.id, projectId, router]);
 
-  const projectUrl = useMemo(() => (formData.name ? `https://${formData.name}.veltrix.app` : ''), [formData.name]);
+  const projectUrl = useMemo(() => (formData.name ? `https://${formData.name}.keshavstack.tech` : ''), [formData.name]);
 
   const updateEnvVar = (index, key, value) => {
     const next = [...formData.envVars];

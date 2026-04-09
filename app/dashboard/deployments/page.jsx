@@ -32,12 +32,12 @@ export default function DeploymentsPage() {
           project: { name: d.subdomain },
           status: d.status === 'running' ? 'deployed' : (d.status === 'failed' ? 'failed' : 'deploying'),
           environment: 'production',
-          url: d.url || `https://${d.subdomain}.veltrix.app`,
+          url: `https://${d.subdomain}.keshavstack.tech`,
           branch: 'main',
           createdAt: d.started_at || new Date().toISOString(),
+          commitSha: 'N/A',
+          commitMessage: 'No commit info available',
           runtime: 'Docker',
-          commitSha: '',
-          commitMessage: 'Deployed via Dashboard'
         }));
         setDeployments(shaped);
       }).catch(err => {
@@ -143,24 +143,24 @@ export default function DeploymentsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <Link
-                          href={`/dashboard/projects/${deployment.projectId}`}
+                          href={`/dashboard/deployments/${deployment.id}`}
                           className="text-sm font-semibold text-gray-900 hover:underline"
                         >
-                          {projectsMap[deployment.projectId]?.name || 'Unknown Project'}
+                          {projectsMap[deployment.projectId]?.name || deployment.project?.name || 'Unknown Project'}
                         </Link>
                       </td>
                       <td className="px-6 py-4">
                         <div>
-                          <p className="text-sm font-mono text-gray-900">{deployment.commitSha ? deployment.commitSha.substring(0, 7) : 'latest'}</p>
-                          <p className="text-xs text-gray-600 mt-1">{deployment.commitMessage || 'Deployed via Git'}</p>
+                          <p className="text-sm font-mono text-gray-900">{deployment.commitSha ? deployment.commitSha.substring(0, 7) : 'N/A'}</p>
+                          <p className="text-xs text-gray-600 mt-1">{deployment.commitMessage || 'No commit info available'}</p>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-sm text-gray-900">{deployment.runtime}</span>
+                        <span className="text-sm text-gray-900">{deployment.runtime || 'Container'}</span>
                       </td>
                       <td className="px-6 py-4">
                         <span className="text-sm text-gray-600">
-                          {deployment.createdAt ? new Date(deployment.createdAt).toLocaleString() : 'N/A'}
+                          {new Date(deployment.createdAt).toLocaleDateString()}
                         </span>
                       </td>
                       <td className="px-6 py-4">

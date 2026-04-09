@@ -24,13 +24,13 @@ export default function ProjectsPage() {
       const activeProjects = deployments.map((d) => ({
         id: d.deployment_id,
         name: d.subdomain,
-        repository: d.repo || 'unknown/repo',
+        repository: d.package ? `Size: ${d.package}` : 'Standard Package',
         type: 'web-service',
-        environment: 'production',
+        environment: 'Production',
         status: d.status === 'running' ? 'active' : d.status,
-        createdAt: d.started_at || new Date().toISOString(),
-        updatedAt: d.last_updated || new Date().toISOString(),
-        branch: 'main',
+        url: d.url || `https://${d.subdomain}.keshavstack.tech`,
+        createdAt: d.started_at,
+        updatedAt: d.last_updated
       }));
       setProjects(activeProjects);
     } catch (error) {
