@@ -134,13 +134,11 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
         min_replicas: Number(formData.minReplicas || 1),
         max_replicas: Number(formData.maxReplicas || 3),
         cpu_target_utilization: Number(formData.cpuTarget || 70),
-        // buildCommand/startCommand currently ignored by meshvpn deploy API but keeping locally
       };
 
       toast.info('Starting backend deployment...');
       const response = await startDeployment(deployPayload);
 
-      // Local storage backup (optional now, but keeping for UX cache if needed)
       const localPayload = {
         name: formData.name.trim(),
         type: projectType,
@@ -169,14 +167,14 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-auto shadow-2xl border border-gray-200">
+      <div className="bg-white dark:bg-zinc-950 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-auto shadow-2xl border border-gray-200 dark:border-zinc-800 transition-colors">
         {/* Header */}
-        <div className="sticky top-0 flex items-center justify-between p-6 border-b border-gray-200 bg-white z-10">
+        <div className="sticky top-0 flex items-center justify-between p-6 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 z-10 transition-colors">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Create New Project</h2>
-            <p className="text-sm text-gray-600 mt-1">Step {step} of 4</p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Create New Project</h2>
+            <p className="text-sm text-gray-600 dark:text-zinc-400 mt-1">Step {step} of 4</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+          <button onClick={onClose} className="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
             <X size={24} />
           </button>
         </div>
@@ -188,7 +186,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
               <div
                 key={i}
                 className={`flex-1 h-2 rounded-full transition-all ${
-                  i <= step ? 'bg-black' : 'bg-gray-200'
+                  i <= step ? 'bg-black dark:bg-white' : 'bg-gray-200 dark:bg-zinc-800'
                 }`}
               ></div>
             ))}
@@ -199,7 +197,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
         <div className="p-6 space-y-6">
           {step === 1 && (
             <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Select Project Type</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Select Project Type</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {projectTypes.map((type) => {
                   const isAvailable = type.id === 'web-service';
@@ -209,19 +207,20 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                     disabled={!isAvailable}
                     onClick={() => isAvailable && applyTypeDefaults(type.id)}
                     className={`p-4 rounded-lg border-2 transition-all text-left relative ${
-                      !isAvailable ? 'opacity-60 cursor-not-allowed border-gray-200 bg-gray-50' : 
-                      projectType === type.id
-                        ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-300 shadow-[0_0_0_3px_rgba(139,92,246,0.2)]'
-                        : 'border-gray-200 hover:border-gray-400'
+                      !isAvailable 
+                        ? 'opacity-60 cursor-not-allowed border-gray-200 bg-gray-50 dark:border-zinc-800 dark:bg-zinc-900/50' 
+                        : projectType === type.id
+                          ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-300 shadow-[0_0_0_3px_rgba(139,92,246,0.2)] dark:bg-violet-900/20 dark:border-violet-500 dark:ring-violet-500/30'
+                          : 'border-gray-200 hover:border-gray-400 dark:border-zinc-700 dark:hover:border-zinc-500 dark:bg-zinc-900'
                     }`}
                   >
                     {!isAvailable && (
-                      <span className="absolute top-2 right-2 text-[10px] font-bold bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">
+                      <span className="absolute top-2 right-2 text-[10px] font-bold bg-gray-200 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400 px-2 py-0.5 rounded-full">
                         Coming soon
                       </span>
                     )}
-                    <p className="font-bold text-gray-900">{type.label}</p>
-                    <p className="text-xs text-gray-600 mt-1">{type.subtitle}</p>
+                    <p className="font-bold text-gray-900 dark:text-white">{type.label}</p>
+                    <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{type.subtitle}</p>
                   </button>
                   );
                 })}
@@ -231,27 +230,27 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
 
           {step === 2 && (
             <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Connect Repository</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Connect Repository</h3>
               
               <div className="relative mb-6">
-                <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-zinc-500" />
                 <input
                   type="text"
                   placeholder="Search your repositories..."
                   value={repoSearch}
                   onChange={(e) => setRepoSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-black font-medium"
+                  className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-black dark:focus:border-zinc-500 font-medium transition-colors"
                 />
               </div>
 
-              <div className="space-y-2 max-h-80 overflow-y-auto">
+              <div className="space-y-2 max-h-80 overflow-y-auto pr-2">
                 {loadingRepos && (
-                   <div className="flex items-center justify-center p-8 text-gray-500">
+                   <div className="flex items-center justify-center p-8 text-gray-500 dark:text-zinc-400">
                      <Loader2 className="animate-spin" size={24} />
                    </div>
                 )}
                 {!loadingRepos && repos.length === 0 && (
-                   <div className="text-center p-8 border-2 border-dashed border-gray-200 rounded-lg text-gray-500">
+                   <div className="text-center p-8 border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-lg text-gray-500 dark:text-zinc-400">
                      No repos found. Ensure you authorized GitHub.
                    </div>
                 )}
@@ -265,7 +264,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                     className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
                       selectedRepo?.id === repo.id
                         ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-300 shadow-[0_0_0_3px_rgba(139,92,246,0.2)] dark:border-violet-400 dark:bg-violet-950/30 dark:ring-violet-500/60 dark:shadow-[0_0_0_3px_rgba(139,92,246,0.35)]'
-                        : 'border-gray-200 hover:border-gray-400 dark:border-slate-700 dark:hover:border-slate-500'
+                        : 'border-gray-200 hover:border-gray-400 dark:border-zinc-800 dark:hover:border-zinc-600 dark:bg-zinc-900/50'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-3">
@@ -276,9 +275,9 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                         }}
                         className="text-left flex-1"
                       >
-                        <p className="font-semibold text-gray-900">{repo.full_name}</p>
-                        <p className="text-xs text-gray-600 mt-1 flex items-center gap-2">
-                           <span className={repo.private ? 'text-amber-600 font-medium' : 'text-green-600 font-medium'}>
+                        <p className="font-semibold text-gray-900 dark:text-white">{repo.full_name}</p>
+                        <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1 flex items-center gap-2">
+                           <span className={repo.private ? 'text-amber-600 dark:text-amber-500 font-medium' : 'text-green-600 dark:text-green-500 font-medium'}>
                              {repo.private ? 'Private' : 'Public'}
                            </span>
                            &bull; Branch: {repo.default_branch}
@@ -289,7 +288,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                           href={repo.html_url}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-sm text-gray-900 hover:text-black font-semibold"
+                          className="inline-flex items-center gap-1 text-sm text-gray-900 dark:text-zinc-300 hover:text-black dark:hover:text-white font-semibold transition-colors"
                         >
                           View repo
                           <ExternalLink size={15} />
@@ -304,10 +303,10 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
 
           {step === 3 && (
             <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Configure Project</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Configure Project</h3>
               <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-zinc-200 mb-2">
                     Project Name *
                   </label>
                   <input
@@ -315,73 +314,73 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                     value={formData.name}
                     onChange={(e) => updateFormData({ name: e.target.value })}
                     placeholder="my-project"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-black dark:focus:border-zinc-500 transition-colors"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Must be unique</p>
+                  <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1">Must be unique</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-zinc-200 mb-2">
                       Branch
                     </label>
                     <input
                       type="text"
                       value={formData.branch}
                       onChange={(e) => updateFormData({ branch: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-black dark:focus:border-zinc-500 transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-zinc-200 mb-2">
                       Root Directory
                     </label>
                     <input
                       type="text"
                       value={formData.rootDirectory}
                       onChange={(e) => updateFormData({ rootDirectory: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-black dark:focus:border-zinc-500 transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">Build Command</label>
-                    <input type="text" value={formData.buildCommand} onChange={(e) => updateFormData({ buildCommand: e.target.value })} placeholder="npm run build" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" />
+                    <label className="block text-sm font-medium text-gray-900 dark:text-zinc-200 mb-2">Build Command</label>
+                    <input type="text" value={formData.buildCommand} onChange={(e) => updateFormData({ buildCommand: e.target.value })} placeholder="npm run build" className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-black dark:focus:border-zinc-500 transition-colors" />
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     <div className="col-span-2">
-                      <label className="block text-sm font-medium text-gray-900 mb-2">Start Command</label>
-                      <input type="text" value={formData.startCommand} onChange={(e) => updateFormData({ startCommand: e.target.value })} placeholder="npm start" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" />
+                      <label className="block text-sm font-medium text-gray-900 dark:text-zinc-200 mb-2">Start Command</label>
+                      <input type="text" value={formData.startCommand} onChange={(e) => updateFormData({ startCommand: e.target.value })} placeholder="npm start" className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-black dark:focus:border-zinc-500 transition-colors" />
                     </div>
                     <div className="col-span-1">
-                      <label className="block text-sm font-medium text-gray-900 mb-2">Port</label>
-                      <input type="number" value={formData.port || 3000} onChange={(e) => updateFormData({ port: parseInt(e.target.value) || 3000 })} placeholder="3000" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" />
+                      <label className="block text-sm font-medium text-gray-900 dark:text-zinc-200 mb-2">Port</label>
+                      <input type="number" value={formData.port || 3000} onChange={(e) => updateFormData({ port: parseInt(e.target.value) || 3000 })} placeholder="3000" className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-black dark:focus:border-zinc-500 transition-colors" />
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 border-t border-gray-200 pt-4 mt-2">
+                <div className="grid grid-cols-3 gap-4 border-t border-gray-200 dark:border-zinc-800 pt-4 mt-2">
                   <div>
-                     <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-1.5">CPU Target %</label>
-                     <input type="number" min="10" max="100" value={formData.cpuTarget || 70} onChange={(e) => updateFormData({ cpuTarget: e.target.value })} className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:border-black outline-none" />
+                     <label className="block text-xs font-bold text-gray-700 dark:text-zinc-400 uppercase tracking-widest mb-1.5">CPU Target %</label>
+                     <input type="number" min="10" max="100" value={formData.cpuTarget || 70} onChange={(e) => updateFormData({ cpuTarget: e.target.value })} className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded focus:border-black dark:focus:border-zinc-500 outline-none transition-colors" />
                   </div>
                   <div>
-                     <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-1.5">Min Replicas</label>
-                     <input type="number" min="1" max="10" value={formData.minReplicas || 1} onChange={(e) => updateFormData({ minReplicas: e.target.value })} className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:border-black outline-none" />
+                     <label className="block text-xs font-bold text-gray-700 dark:text-zinc-400 uppercase tracking-widest mb-1.5">Min Replicas</label>
+                     <input type="number" min="1" max="10" value={formData.minReplicas || 1} onChange={(e) => updateFormData({ minReplicas: e.target.value })} className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded focus:border-black dark:focus:border-zinc-500 outline-none transition-colors" />
                   </div>
                   <div>
-                     <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-1.5">Max Replicas</label>
-                     <input type="number" min="1" max="20" value={formData.maxReplicas || 3} onChange={(e) => updateFormData({ maxReplicas: e.target.value })} className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:border-black outline-none" />
+                     <label className="block text-xs font-bold text-gray-700 dark:text-zinc-400 uppercase tracking-widest mb-1.5">Max Replicas</label>
+                     <input type="number" min="1" max="20" value={formData.maxReplicas || 3} onChange={(e) => updateFormData({ maxReplicas: e.target.value })} className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded focus:border-black dark:focus:border-zinc-500 outline-none transition-colors" />
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-gray-900">Environment Variables</label>
+                    <label className="text-sm font-medium text-gray-900 dark:text-zinc-200">Environment Variables</label>
                     <div className="flex items-center gap-2">
-                      <label className="inline-flex items-center gap-2 text-xs font-semibold border border-gray-300 px-3 py-1.5 rounded-md cursor-pointer hover:bg-gray-100">
+                      <label className="inline-flex items-center gap-2 text-xs font-semibold border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-zinc-300 px-3 py-1.5 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
                         <FileUp size={14} />
                         Upload .env
                         <input type="file" accept=".env,.txt" onChange={handleEnvFileUpload} className="hidden" />
@@ -389,7 +388,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                       <button
                         type="button"
                         onClick={addEnvVar}
-                        className="inline-flex items-center gap-1 text-xs font-semibold border border-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-100"
+                        className="inline-flex items-center gap-1 text-xs font-semibold border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-zinc-300 px-3 py-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
                       >
                         <Plus size={14} /> Add
                       </button>
@@ -403,19 +402,19 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                           value={envVar.key}
                           onChange={(event) => updateEnvVar(index, event.target.value, envVar.value)}
                           placeholder="KEY"
-                          className="col-span-5 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-black"
+                          className="col-span-5 px-3 py-2 border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-md text-sm focus:outline-none focus:border-black dark:focus:border-zinc-500 transition-colors"
                         />
                         <input
                           type="text"
                           value={envVar.value}
                           onChange={(event) => updateEnvVar(index, envVar.key, event.target.value)}
                           placeholder="value"
-                          className="col-span-6 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-black"
+                          className="col-span-6 px-3 py-2 border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-md text-sm focus:outline-none focus:border-black dark:focus:border-zinc-500 transition-colors"
                         />
                         <button
                           type="button"
                           onClick={() => removeEnvVar(index)}
-                          className="col-span-1 inline-flex items-center justify-center p-2 border border-gray-300 rounded-md hover:bg-gray-100"
+                          className="col-span-1 inline-flex items-center justify-center p-2 border border-gray-300 dark:border-zinc-700 text-gray-500 dark:text-zinc-400 rounded-md hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400 hover:border-red-200 dark:hover:border-red-900 transition-colors"
                         >
                           <Trash2 size={14} />
                         </button>
@@ -429,7 +428,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
 
           {step === 4 && (
             <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Select Instance Size</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Select Instance Size</h3>
               <div className="space-y-3">
                 {deployPackages.map((pkg) => (
                   <button
@@ -437,31 +436,31 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                     onClick={() => updateFormData({ packageSize: pkg.id })}
                     className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
                       (formData.packageSize || 'small') === pkg.id
-                        ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-300 shadow-[0_0_0_3px_rgba(139,92,246,0.2)] dark:border-violet-400 dark:bg-violet-950/30'
-                        : 'border-gray-200 hover:border-gray-400 dark:border-slate-700'
+                        ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-300 shadow-[0_0_0_3px_rgba(139,92,246,0.2)] dark:border-violet-400 dark:bg-violet-950/30 dark:ring-violet-500/50'
+                        : 'border-gray-200 hover:border-gray-400 dark:border-zinc-800 dark:hover:border-zinc-600 dark:bg-zinc-900'
                     }`}
                   >
-                    <p className="font-semibold text-gray-900">{pkg.title}</p>
-                    <p className="text-xs text-gray-600 mt-1">{pkg.description}</p>
+                    <p className="font-semibold text-gray-900 dark:text-white">{pkg.title}</p>
+                    <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{pkg.description}</p>
                   </button>
                 ))}
               </div>
 
-              <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg text-sm text-gray-700 space-y-1">
-                <p><span className="font-semibold text-gray-900">Project:</span> {formData.name || 'Untitled project'}</p>
-                <p><span className="font-semibold text-gray-900">Repository:</span> {selectedRepo ? selectedRepo.full_name : 'None selected'}</p>
-                <p><span className="font-semibold text-gray-900">Size:</span> {(formData.packageSize || 'small').toUpperCase()}</p>
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg text-sm text-gray-700 dark:text-zinc-300 space-y-1 transition-colors">
+                <p><span className="font-semibold text-gray-900 dark:text-white">Project:</span> {formData.name || 'Untitled project'}</p>
+                <p><span className="font-semibold text-gray-900 dark:text-white">Repository:</span> {selectedRepo ? selectedRepo.full_name : 'None selected'}</p>
+                <p><span className="font-semibold text-gray-900 dark:text-white">Size:</span> {(formData.packageSize || 'small').toUpperCase()}</p>
               </div>
             </div>
           )}
         </div>
 
         {/* Footer Actions */}
-        <div className="sticky bottom-0 p-6 border-t border-gray-200 bg-white flex items-center gap-3">
+        <div className="sticky bottom-0 p-6 border-t border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-center gap-3 transition-colors">
           {step > 1 && (
             <button
               onClick={() => setStep(step - 1)}
-              className="flex-1 px-6 py-2 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              className="flex-1 px-6 py-2 border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-zinc-300 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-zinc-900 transition-colors"
             >
               Back
             </button>
@@ -469,7 +468,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
           {step < 4 ? (
             <button
               onClick={handleNext}
-              className="flex-1 flex items-center justify-center gap-2 bg-black text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-900 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-lg font-semibold hover:bg-gray-900 dark:hover:bg-zinc-200 transition-colors"
             >
               Next
               <ArrowRight size={18} />
@@ -478,7 +477,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
             <button
               onClick={handleSubmit}
               disabled={isDeploying}
-              className="flex-1 bg-black text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-900 transition-colors disabled:opacity-50"
+              className="flex-1 bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-lg font-semibold hover:bg-gray-900 dark:hover:bg-zinc-200 transition-colors disabled:opacity-50"
             >
               {isDeploying ? 'Deploying...' : 'Create Project'}
             </button>
