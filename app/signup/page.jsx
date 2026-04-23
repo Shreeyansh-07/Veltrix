@@ -186,7 +186,7 @@ export default function SignupPage() {
           <button
             type="button"
             onClick={handleGitHubSignup}
-            className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-3"
+            className="w-full border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-3"
           >
             <Github size={20} />
             Continue with GitHub

@@ -34,12 +34,16 @@ export interface AnalyticsSnapshotResponse {
   metrics: AnalyticsMetrics;
 }
 
-export async function getPlatformAnalytics() {
+export async function getAnalyticsSnapshot(deploymentId: string): Promise<AnalyticsSnapshotResponse> {
+  return fetchWithAuth(`/deployments/${deploymentId}/analytics`);
+}
+
+export async function getPlatformAnalytics(): Promise<any> {
   return fetchWithAuth('/platform/analytics');
 }
 
-export async function getAnalyticsSnapshot(deploymentId: string): Promise<AnalyticsSnapshotResponse> {
-  return fetchWithAuth(`/deployments/${deploymentId}/analytics`);
+export async function getUserAnalytics(): Promise<any> {
+  return fetchWithAuth('/user/analytics');
 }
 
 /**

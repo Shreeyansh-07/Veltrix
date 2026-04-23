@@ -62,10 +62,12 @@ export async function getBuildLogs(deploymentId: string) {
   return fetchWithAuth(`/deployments/${deploymentId}/build-logs`);
 }
 
-export async function getAppLogs(deploymentId: string, tail: number = 200) {
-  return fetchWithAuth(`/deployments/${deploymentId}/app-logs?tail=${tail}`);
-}
-
-export async function getDeploymentDetails(deploymentId: string) {
-  return fetchWithAuth(`/deployments/${deploymentId}`);
+export async function getAppLogs(deploymentId: string, cursor?: number, tail: number = 200) {
+  let url = `/deployments/${deploymentId}/app-logs`;
+  if (cursor !== undefined) {
+    url += `?cursor=${cursor}`;
+  } else {
+    url += `?tail=${tail}`;
+  }
+  return fetchWithAuth(url);
 }

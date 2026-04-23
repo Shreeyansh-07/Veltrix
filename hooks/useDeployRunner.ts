@@ -16,29 +16,7 @@ export function useDeployRunner() {
       const deployRes = await createDeployment(payload);
       const deploymentId = deployRes.deployment_id;
       setDeploymentData(deployRes);
-
-      // Start polling
-      const pollInterval = setInterval(async () => {
-        try {
-          const all = await listDeployments();
-          const current = all.find((d) => d.deployment_id === deploymentId);
-
-          if (current) {
-            setStatus(current.status);
-            
-            if (current.status === 'running' || current.status === 'failed') {
-              clearInterval(pollInterval);
-              setIsDeploying(false);
-              setDeploymentData(current);
-            }
-          }
-        } catch (pollErr: any) {
-          clearInterval(pollInterval);
-          setError(pollErr.message);
-          setIsDeploying(false);
-        }
-      }, 3000); // poll every 3 seconds
-      
+      setIsDeploying(false);
       return deployRes;
     } catch (err: any) {
       setError(err.message);

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FolderOpen, Settings, BarChart3, Menu, X, ChevronDown, LogOut, Bell, Activity } from 'lucide-react';
+import { FolderOpen, Settings, BarChart3, Menu, X, ChevronDown, LogOut, Bell, LineChart } from 'lucide-react';
 import { authStore } from '@/lib/auth-store';
 import { projectsStore } from '@/lib/projects-store';
 import BrandLogo from '@/components/brand-logo';
@@ -48,7 +48,7 @@ const DashboardSidebar = () => {
       badge: counts.deployments,
     },
     {
-      icon: Activity,
+      icon: LineChart,
       label: 'Analytics',
       href: '/dashboard/analytics',
     },

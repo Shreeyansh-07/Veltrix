@@ -22,7 +22,7 @@ const ProjectCard = ({ project, onDelete }) => {
   };
 
   const handleCopyUrl = () => {
-    const url = `https://${project.name}.veltrix.app`;
+    const url = project.url || `https://${project.name}.keshavstack.tech`;
     navigator.clipboard.writeText(url);
     toast.success('URL copied to clipboard!');
   };
@@ -33,9 +33,7 @@ const ProjectCard = ({ project, onDelete }) => {
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <Link href={`/dashboard/deployments/${project.id}`}>
-              <h3 className="text-lg font-bold text-gray-900 hover:text-purple-600 transition-colors">{project.name}</h3> 
-            </Link>
+            <h3 className="text-lg font-bold text-gray-900">{project.name}</h3>
             <p className="text-sm text-gray-600 mt-1 truncate max-w-44">{project.repository}</p>
           </div>
           <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getTypeColor(project.type)}`}>
@@ -61,11 +59,11 @@ const ProjectCard = ({ project, onDelete }) => {
         <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
           <div>
             <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">Branch</p>
-            <p className="text-sm font-medium text-gray-900">{project.branch}</p>
+            <p className="text-sm font-medium text-gray-900">{project.branch || 'main'}</p>
           </div>
           <div>
             <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">Environment</p>
-            <p className="text-sm font-medium text-gray-900">{project.environment}</p>
+            <p className="text-sm font-medium text-gray-900">{project.environment || 'Production'}</p>
           </div>
         </div>
 
@@ -74,7 +72,7 @@ const ProjectCard = ({ project, onDelete }) => {
           <input
             type="text"
             readOnly
-            value={`https://${project.name}.veltrix.app`}
+            value={project.url || `https://${project.name}.keshavstack.tech`}
             className="flex-1 bg-transparent text-xs text-gray-700 outline-none"
           />
           <button
@@ -88,8 +86,8 @@ const ProjectCard = ({ project, onDelete }) => {
 
         {/* Timestamps */}
         <div className="text-xs text-gray-500 space-y-1">
-          <p>Created: {project.createdAt ? new Date(project.createdAt).toLocaleString() : 'N/A'}</p>    
-          <p>Updated: {project.updatedAt ? new Date(project.updatedAt).toLocaleString() : 'N/A'}</p>    
+          <p>Created: {project.createdAt ? new Date(project.createdAt).toLocaleDateString() : 'N/A'}</p>
+          <p>Updated: {project.updatedAt ? new Date(project.updatedAt).toLocaleDateString() : 'N/A'}</p>
         </div>
       </div>
 
